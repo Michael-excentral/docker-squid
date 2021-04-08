@@ -5,7 +5,7 @@ FROM alpine
 RUN apk add --no-cache make perl
 
 WORKDIR /tmp
-RUN apk add --no-cache tzdata -y \
+RUN apk add --no-cache tzdata  \
   && cp /usr/share/zoneinfo/Asia/Nicosia /etc/localtime \
   && echo "Asia/Nicosia" >  /etc/timezone \
   && apk del tzdata
