@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  squid:
+    build: ./squid/
+    ports:
+      - "8888:3128"
+    volumes:
+      - ./cache:/usr/local/squid/var/cache
+      - ./logs:/usr/local/squid/var/logs
+      - ./squid.conf:/etc/squid/squid.conf
+      - ./ca.crt:/usr/local/squid/ca.crt
+      - ./ca.key:/usr/local/squid/ca.key
+    restart: always
+    command: squid -f /etc/squid/squid.conf -NYCd 1
+  loganalyzer:
+    build: ./analyzer/
+    ports:
+      - "8080:80"
+    volumes:
+      - ./logs:/var/squid/logs
+    depends_on: squid
+#    command: 
