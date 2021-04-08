@@ -1,5 +1,5 @@
 
-FROM httpd:2.4-alpine
+FROM alpine
 
 ####COPY ./public-html/ /usr/local/apache2/htdocs/
 RUN apk add --no-cache make perl
@@ -28,8 +28,7 @@ RUN chmod +x squid-analyzer
 #RUN echo "crond -b -l 7 -L /var/squid/logs/cron.log" >> start-apacron.sh
 #RUN echo "httpd" >> start-apacron.sh
 #RUN chmod +x start-apacron.sh
-
 RUN squid-analyzer -r
 
-ENTRYPOINT [ "crond", "-L /var/squid/logs/cron.log" ]
+#ENTRYPOINT [ "crond", "-L /var/squid/logs/cron.log" ]
 

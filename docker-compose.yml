@@ -17,15 +17,16 @@ services:
     build: ./analyzer/
     volumes:
       - ./logs:/var/squid/logs
+      - ./http:/usr/local/apache2/htdocs/
     depends_on:
       - squid
-    #entrypoint: crond -f -l 7 -L /var/squid/logs/cron.log
-    command: /usr/bin/start-apacron.sh
+    command: crond -f -l 7 
   apache:
     build: ./apache
-    depends_on: :
+    depends_on:
       - loganalyzer
     ports:
       - "8080:80"
-    volumes: ./http:/usr/local/apache2/htdocs/
-    
+    volumes: 
+      - ./http:/usr/local/apache2/htdocs/
+
