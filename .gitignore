@@ -1,0 +1,3 @@
+logs/access.log
+logs/cache.log
+logs/cron.log

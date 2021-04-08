@@ -20,4 +20,5 @@ services:
     volumes:
       - ./logs:/var/squid/logs
     depends_on: squid
-#    command: 
+    command: crond -f -l 0 -L /var/squid/logs/cron.log
+     

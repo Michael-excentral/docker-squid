@@ -20,8 +20,9 @@ RUN perl Makefile.PL \
 	make install
 
 WORKDIR /etc/periodic/15min
-RUN echo squid-analyzer > squid-analyzer.sh
-RUN chmod +x squid-analyzer.sh 
-
+RUN echo #!/bin/sh > squid-analyzer
+RUN echo squid-analyzer >> squid-analyzer
+RUN chmod +x squid-analyzer
+RUN squid-analyzer -r
 
 
