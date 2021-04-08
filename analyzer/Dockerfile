@@ -1,11 +1,7 @@
-
 FROM alpine
 
-####COPY ./public-html/ /usr/local/apache2/htdocs/
-RUN apk add --no-cache make perl
-
 WORKDIR /tmp
-RUN apk add --no-cache tzdata  \
+RUN apk add --no-cache tzdata make perl \
   && cp /usr/share/zoneinfo/Asia/Nicosia /etc/localtime \
   && echo "Asia/Nicosia" >  /etc/timezone \
   && apk del tzdata
@@ -24,9 +20,9 @@ RUN perl Makefile.PL \
 	make install
 
 WORKDIR /etc/periodic/15min
-RUN echo "#!/bin/sh" > squid-analyzer
-RUN echo squid-analyzer >> squid-analyzer
-RUN chmod +x squid-analyzer
+RUN echo "#!/bin/sh" > squid-analyzer \
+    && echo squid-analyzer >> squid-analyzer \
+    && chmod +x squid-analyzer
 RUN squid-analyzer -r
 
 #ENTRYPOINT [ "crond", "-L /var/squid/logs/cron.log" ]
