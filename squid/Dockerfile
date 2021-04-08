@@ -4,12 +4,15 @@ ENV SQUID_VERSION=3.5.27 \
     SQUID_DIR=/usr/local/squid \
     SQUID_USER=proxy
 
-RUN apt-get update
-RUN apt-get install build-essential openssl libssl1.0-dev wget -y
+RUN apt-get update \
+    && apt-get install build-essential openssl libssl1.0-dev wget -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
 RUN wget --progress=dot:giga http://www.squid-cache.org/Versions/v3/3.5/squid-${SQUID_VERSION}.tar.gz
 RUN tar -xzf squid-${SQUID_VERSION}.tar.gz
+RUN rm squid-${SQUID_VERSION}.tar.gz
 WORKDIR /tmp/squid-${SQUID_VERSION}
 
 RUN chmod +x configure

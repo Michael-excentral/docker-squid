@@ -19,6 +19,6 @@ services:
       - "8080:80"
     volumes:
       - ./logs:/var/squid/logs
-    depends_on: squid
-    command: crond -f -l 0 -L /var/squid/logs/cron.log
-     
+    depends_on:
+      - squid
+    command: crond -f -l 7 -L /var/squid/logs/cron.log
