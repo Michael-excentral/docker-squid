@@ -1,3 +1,6 @@
 logs/access.log
 logs/cache.log
 logs/cron.log
+logs/
+http/
+cache/
