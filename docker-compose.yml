@@ -15,10 +15,17 @@ services:
     command: squid -f /etc/squid/squid.conf -NYCd 1
   loganalyzer:
     build: ./analyzer/
-    ports:
-      - "8080:80"
     volumes:
       - ./logs:/var/squid/logs
     depends_on:
       - squid
-    command: crond -f -l 7 -L /var/squid/logs/cron.log
+    #entrypoint: crond -f -l 7 -L /var/squid/logs/cron.log
+    command: /usr/bin/start-apacron.sh
+  apache:
+    build: ./apache
+    depends_on: :
+      - loganalyzer
+    ports:
+      - "8080:80"
+    volumes: ./http:/usr/local/apache2/htdocs/
+    

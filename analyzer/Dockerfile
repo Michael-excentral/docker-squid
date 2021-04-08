@@ -20,9 +20,16 @@ RUN perl Makefile.PL \
 	make install
 
 WORKDIR /etc/periodic/15min
-RUN echo #!/bin/sh > squid-analyzer
+RUN echo "#!/bin/sh" > squid-analyzer
 RUN echo squid-analyzer >> squid-analyzer
 RUN chmod +x squid-analyzer
+#WORKDIR /usr/bin
+#RUN echo "#!/bin/sh" > start-apacron.sh
+#RUN echo "crond -b -l 7 -L /var/squid/logs/cron.log" >> start-apacron.sh
+#RUN echo "httpd" >> start-apacron.sh
+#RUN chmod +x start-apacron.sh
+
 RUN squid-analyzer -r
 
+ENTRYPOINT [ "crond", "-L /var/squid/logs/cron.log" ]
 
