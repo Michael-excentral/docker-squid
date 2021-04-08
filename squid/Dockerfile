@@ -10,7 +10,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
-RUN wget --progress=dot:giga http://www.squid-cache.org/Versions/v3/3.5/squid-${SQUID_VERSION}.tar.gz
+RUN wget http://www.squid-cache.org/Versions/v3/3.5/squid-${SQUID_VERSION}.tar.gz
 RUN tar -xzf squid-${SQUID_VERSION}.tar.gz
 RUN rm squid-${SQUID_VERSION}.tar.gz
 WORKDIR /tmp/squid-${SQUID_VERSION}

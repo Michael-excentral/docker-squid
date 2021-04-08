@@ -5,7 +5,7 @@ FROM httpd:2.4-alpine
 RUN apk add --no-cache make perl
 
 WORKDIR /tmp
-RUN wget --progress=dot:giga https://sourceforge.net/projects/squid-report/files/squid-report/6.6/squidanalyzer-6.6.tar.gz/download -O squidanalyzer-6.6.tar.gz
+RUN wget https://sourceforge.net/projects/squid-report/files/squid-report/6.6/squidanalyzer-6.6.tar.gz/download -O squidanalyzer-6.6.tar.gz
 RUN tar -xzf squidanalyzer-6.6.tar.gz
 WORKDIR /tmp/squidanalyzer-6.6
 RUN perl Makefile.PL \
