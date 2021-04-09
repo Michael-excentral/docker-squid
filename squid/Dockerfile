@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 ENV SQUID_VERSION=3.5.27 \
     SQUID_DIR=/usr/local/squid \
-    SQUID_USER=proxy
+    SQUID_USER=1000
 
 RUN apt-get update \
     && apt-get install build-essential openssl libssl1.0-dev wget -y \
