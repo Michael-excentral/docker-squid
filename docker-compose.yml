@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   squid:
@@ -17,10 +17,11 @@ services:
     build: ./analyzer/
     volumes:
       - ./logs:/var/squid/logs
-      - ./http:/usr/local/apache2/htdocs/
+      - ./http:/htdocs/
     depends_on:
       - squid
-    command: crond -f -l 7 
+    command: /usr/local/bin/copyhtml.sh
+#crond -f -l 7 
   apache:
     build: ./apache
     depends_on:

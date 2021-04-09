@@ -29,10 +29,12 @@ RUN ./configure \
         --enable-ssl-crtd \
         --with-openssl \
         --enable-follow-x-forwarded-for \
-        --with-default-user=${SQUID_USER}
+        --with-default-user=squiduser
 RUN make \
     && make install
 
+RUN echo "squiduser:x:${SQUID_USER}:${SQUID_USER}::/:/usr/bin/nologin" >> /etc/passwd
+RUN echo "squiduser:x:${SQUID_USER}:squiduser" >> /etc/group
 ENV PATH=$PATH:/usr/local/squid/sbin
 RUN /usr/lib/squid/ssl_crtd -c -s /var/lib/ssl_db # SSL certificate database directory
 

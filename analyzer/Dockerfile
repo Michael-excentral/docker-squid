@@ -13,7 +13,7 @@ RUN tar -xzf squidanalyzer-${ANALYZER_VERSION}.tar.gz
 WORKDIR /tmp/squidanalyzer-${ANALYZER_VERSION}
 RUN perl Makefile.PL \
                     LOGFILE=/var/squid/logs/access.log \
-                    BINDIR=/usr/bin \
+                    BINDIR=/usr/local/bin \
                     CONFDIR=/etc \
                     HTMLDIR=/usr/local/apache2/htdocs/ \
                     BASEURL=/ \
@@ -21,14 +21,25 @@ RUN perl Makefile.PL \
                     DOCDIR=/usr/share/doc/squidanalyzer \
   && make \
 	&& make install \
-  && chown ${ANALYZER_USER} /usr/bin/squid-analyzer \
-  && chmod +s /usr/bin/squid-analyzer \
-  && squid-analyzer -r
+  && chown ${ANALYZER_USER}:${ANALYZER_USER} /usr/local/bin/squid-analyzer \
+  && chmod +s /usr/local/bin/squid-analyzer \
+  && /usr/local/bin/squid-analyzer -r
 
 WORKDIR /etc/periodic/15min
 RUN echo "#!/bin/sh" > squid-analyzer \
-    && echo squid-analyzer >> squid-analyzer \
+    && echo /usr/local/bin/squid-analyzer >> squid-analyzer \
     && chmod +x squid-analyzer
+WORKDIR /usr/local/bin
+RUN echo "#!/bin/sh" > copyhtml.sh \
+    && echo "chown -Rc ${ANALYZER_USER}:${ANALYZER_USER} /usr/local/apache2/htdocs" >> copyhtml.sh \
+    && echo "cp -avu /usr/local/apache2/htdocs/* /htdocs/" >> copyhtml.sh \
+    && echo "rm -rfv /usr/local/apache2/htdocs" >> copyhtml.sh \
+    && echo "ln -s /htdocs /usr/local/apache2/htdocs" >> copyhtml.sh \
+    && echo "chown -Rc ${ANALYZER_USER}:${ANALYZER_USER} /htdocs" >> copyhtml.sh \
+    && echo "crond -f -l 7" >> copyhtml.sh \
+    && chmod +x copyhtml.sh
+
+#/usr/local/apache2/htdocs/
 #RUN squid-analyzer -r
 
 #ENTRYPOINT [ "crond", "-L /var/squid/logs/cron.log" ]
