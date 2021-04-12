@@ -40,7 +40,7 @@ RUN echo "#!/bin/sh" > copyhtml.sh \
     && chmod +x copyhtml.sh
 
 #/usr/local/apache2/htdocs/
-#RUN squid-analyzer -r
+RUN squid-analyzer -r
 
 #ENTRYPOINT [ "crond", "-L /var/squid/logs/cron.log" ]
 

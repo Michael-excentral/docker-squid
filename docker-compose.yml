@@ -1,33 +1,52 @@
 version: '3.8'
 
 services:
-  squid:
-    build: ./squid/
+#  squid:
+#    build: ./squid/
+#    ports:
+#      - "8888:3128"
+#    volumes:
+#      - ./cache:/usr/local/squid/var/cache
+#      - ./logs:/usr/local/squid/var/logs
+#      - ./squid.conf:/etc/squid/squid.conf
+#      - ./ca.crt:/usr/local/squid/ca.crt
+#      - ./ca.key:/usr/local/squid/ca.key
+#    restart: always
+#    command: squid -f /etc/squid/squid.conf -NYCd 1
+
+  squid-distahl:
+    build: ./squid-distahl/
     ports:
       - "8888:3128"
+      - "8889:3129"
     volumes:
-      - ./cache:/usr/local/squid/var/cache
-      - ./logs:/usr/local/squid/var/logs
-      - ./squid.conf:/etc/squid/squid.conf
-      - ./ca.crt:/usr/local/squid/ca.crt
-      - ./ca.key:/usr/local/squid/ca.key
-    restart: always
-    command: squid -f /etc/squid/squid.conf -NYCd 1
+      - ./cache:/var/spool/squid
+      - ./logs:/var/log/squid
+#      - ./etc:/etc/squid/squid.conf
+#      - ./ca.crt:/usr/local/squid/ca.crt
+#      - ./ca.key:/usr/local/squid/ca.key
+    restart: "no"
+#    command: squid -f /etc/squid/squid.conf -NYCd 1
+
   loganalyzer:
     build: ./analyzer/
     volumes:
       - ./logs:/var/squid/logs
       - ./http:/htdocs/
     depends_on:
-      - squid
+      - squid-distahl
     command: /usr/local/bin/copyhtml.sh
-#crond -f -l 7 
+    restart: "no"
+
   apache:
     build: ./apache
     depends_on:
       - loganalyzer
+      - squid-distahl
     ports:
       - "8080:80"
-    volumes: 
+    volumes:
       - ./http:/usr/local/apache2/htdocs/
+    restart: "no"
+
 
