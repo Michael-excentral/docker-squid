@@ -16,11 +16,13 @@ services:
 
   squid-distahl:
     build: ./squid-distahl/
+#    env_file:
+#      - variables.env
     ports:
       - "8888:3128"
       - "8889:3129"
     volumes:
-      - ./cache:/var/spool/squid
+#      - ./cache:/var/spool/squid
       - ./logs:/var/log/squid
 #      - ./etc:/etc/squid/squid.conf
 #      - ./ca.crt:/usr/local/squid/ca.crt

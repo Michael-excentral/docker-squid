@@ -27,7 +27,7 @@ RUN perl Makefile.PL \
 
 WORKDIR /etc/periodic/15min
 RUN echo "#!/bin/sh" > squid-analyzer \
-    && echo /usr/local/bin/squid-analyzer >> squid-analyzer \
+    && echo "/usr/local/bin/squid-analyzer -d" >> squid-analyzer \
     && chmod +x squid-analyzer
 WORKDIR /usr/local/bin
 RUN echo "#!/bin/sh" > copyhtml.sh \

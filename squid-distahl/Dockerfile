@@ -3,14 +3,14 @@ FROM debian:buster-slim
 ENV LANG en_US.utf8
 ENV PATH="${PATH}:/xbin"
 ENV TZ Asia/Nicosia
-ENV PROXY_UID 1000
-ENV PROXY_GID 1000
+ENV PROXY_UID $(id -u) 
+ENV PROXY_GID $(id -g) 
 
 RUN ln -sf /bin/bash /bin/sh
 
 #RUN echo 'deb http://deb.debian.org/debian sid-backports main' > /etc/apt/sources.list.d/backports.list
 #RUN echo 'deb-src http://deb.debian.org/debian sid-backports main' >> /etc/apt/sources.list.d/deb-sources.list
-RUN echo 'deb-src http://deb.debian.org/debian sid main' >> /etc/apt/sources.list.d/deb-sources.list
+RUN echo 'deb-src http://deb.debian.org/debian buster main' >> /etc/apt/sources.list.d/deb-sources.list
 
 RUN DEBIAN_FRONTEND=noninteractive && \
 	apt-get update && \
