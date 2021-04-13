@@ -6,3 +6,6 @@ Using ports 8888 & 8889 (not yet) for the proxy
 Using port 8080 for the statistics (not protected yet)
 
 Serving pac files in folder "pacs" from host:8080/pacs
+
+TODO: move all ENVs to a single file
+TODO: auth for stats
