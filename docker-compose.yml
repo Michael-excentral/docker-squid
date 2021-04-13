@@ -9,9 +9,9 @@ services:
       - "8888:3128"
       - "8889:3129"
     volumes:
-      - ./logs:/var/log/squid
-      - ./cache:/var/spool/squid
-      - ./:/etc/squid
+      - ./logs:/var/log/squid/
+      - ./cache:/var/spool/squid/
+      - ./etc:/etc/squid/
 #      - ./ca.crt:/usr/local/squid/ca.crt
 #      - ./ca.key:/usr/local/squid/ca.key
     restart: "no"
