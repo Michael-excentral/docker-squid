@@ -1,37 +1,23 @@
 version: '3.8'
 
 services:
-#  squid:
-#    build: ./squid/
-#    ports:
-#      - "8888:3128"
-#    volumes:
-#      - ./cache:/usr/local/squid/var/cache
-#      - ./logs:/usr/local/squid/var/logs
-#      - ./squid.conf:/etc/squid/squid.conf
-#      - ./ca.crt:/usr/local/squid/ca.crt
-#      - ./ca.key:/usr/local/squid/ca.key
-#    restart: always
-#    command: squid -f /etc/squid/squid.conf -NYCd 1
-
   squid-distahl:
-    build: ./squid-distahl/
+    build: ./build/squid-distahl/
 #    env_file:
 #      - variables.env
     ports:
       - "8888:3128"
       - "8889:3129"
     volumes:
-#      - ./cache:/var/spool/squid
       - ./logs:/var/log/squid
-#      - ./etc:/etc/squid/squid.conf
+      - ./cache:/var/spool/squid
 #      - ./ca.crt:/usr/local/squid/ca.crt
 #      - ./ca.key:/usr/local/squid/ca.key
     restart: "no"
 #    command: squid -f /etc/squid/squid.conf -NYCd 1
 
   loganalyzer:
-    build: ./analyzer/
+    build: ./build/analyzer/
     volumes:
       - ./logs:/var/squid/logs
       - ./http:/htdocs/
@@ -41,7 +27,7 @@ services:
     restart: "no"
 
   apache:
-    build: ./apache
+    build: ./build/apache
     depends_on:
       - loganalyzer
       - squid-distahl

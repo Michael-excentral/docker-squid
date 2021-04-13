@@ -3,8 +3,10 @@ FROM debian:buster-slim
 ENV LANG en_US.utf8
 ENV PATH="${PATH}:/xbin"
 ENV TZ Asia/Nicosia
-ENV PROXY_UID $(id -u) 
-ENV PROXY_GID $(id -g) 
+ENV PROXY_UID 1000
+#$(id -u) 
+ENV PROXY_GID 1000
+#$(id -g) 
 
 RUN ln -sf /bin/bash /bin/sh
 
@@ -35,15 +37,18 @@ RUN DEBIAN_FRONTEND=noninteractive && \
 RUN mv /etc/squid /etc/squid.dist && \
 	sed -i 's/^#http_access allow localnet/http_access allow localnet/g' /etc/squid.dist/conf.d/debian.conf && \
 	mkdir /etc/squid
-	
+#RUN mkdir -p /var/spool/squid
 
 COPY ssl-selfsigned.conf /etc/squid.dist/ssl-selfsigned.conf
 COPY ssl.conf /etc/squid.dist/conf.d/ssl.conf	
 COPY start-squid.sh /bin/start-squid.sh
 
-VOLUME /etc/squid
-VOLUME /var/log/squid
-VOLUME /var/spool/squid
+RUN touch /var/log/squid/access.log
+RUN touch /var/spool/squid/netdb.state
+
+#VOLUME /etc/squid
+#VOLUME /var/log/squid
+#VOLUME /var/spool/squid
 
 EXPOSE 3128/tcp
 EXPOSE 3129/tcp
