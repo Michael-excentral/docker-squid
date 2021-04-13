@@ -36,6 +36,7 @@ services:
       - "8080:80"
     volumes:
       - ./http:/usr/local/apache2/htdocs/
+      - ./pacs:/usr/local/apache2/htdocs/pacs/
     restart: "no"
 
 
