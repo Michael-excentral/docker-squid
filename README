@@ -1,6 +1,0 @@
-ca.crt needs to be imported as a trusted root CA, to enable transparent SSL
-
-Squid logs are saved in the logs folder, to enable external processing and to keep them regardless of rebuilding docker images and so on
-
-hints from https://hazelement.github.io/non-transparent-proxy-with-squid-and-docker.html
-
