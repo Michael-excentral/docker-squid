@@ -37,18 +37,14 @@ RUN DEBIAN_FRONTEND=noninteractive && \
 RUN mv /etc/squid /etc/squid.dist && \
 	sed -i 's/^#http_access allow localnet/http_access allow localnet/g' /etc/squid.dist/conf.d/debian.conf && \
 	mkdir /etc/squid
-#RUN mkdir -p /var/spool/squid
 
 COPY ssl-selfsigned.conf /etc/squid.dist/ssl-selfsigned.conf
 COPY ssl.conf /etc/squid.dist/conf.d/ssl.conf	
 COPY start-squid.sh /bin/start-squid.sh
 
-RUN touch /var/log/squid/access.log
-RUN touch /var/spool/squid/netdb.state
-
-#VOLUME /etc/squid
-#VOLUME /var/log/squid
-#VOLUME /var/spool/squid
+VOLUME /etc/squid
+VOLUME /var/log/squid
+VOLUME /var/spool/squid
 
 EXPOSE 3128/tcp
 EXPOSE 3129/tcp

@@ -4,3 +4,4 @@
 #logs/
 #http/
 #cache/
+squid.old.conf

@@ -11,6 +11,7 @@ services:
     volumes:
       - ./logs:/var/log/squid
       - ./cache:/var/spool/squid
+      - ./:/etc/squid
 #      - ./ca.crt:/usr/local/squid/ca.crt
 #      - ./ca.key:/usr/local/squid/ca.key
     restart: "no"
