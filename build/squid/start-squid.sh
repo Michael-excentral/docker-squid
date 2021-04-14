@@ -99,7 +99,7 @@ grepconf () {
 }
 
 create_run_dir () {
-        run_dir=/var/run/squid
+        run_dir=/run/squid
         usr=`grepconf cache_effective_user proxy`
         grp=`grepconf cache_effective_group proxy`
 
@@ -113,7 +113,7 @@ create_run_dir () {
 
 cache_dir=`find_cache_dir cache_dir`
 cache_type=`grepconf cache_dir`
-run_dir=/var/run/squid
+run_dir=/run/squid
 
 #
 # Create run dir (needed for several workers on SMP)

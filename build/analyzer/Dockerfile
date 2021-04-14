@@ -30,7 +30,7 @@ RUN perl Makefile.PL \
 WORKDIR /etc/periodic/15min
 RUN echo "#!/bin/sh" > squid-analyzer \
     && echo "echo -n \"Running squid-analyzer...\"" >> squid-analyzer \
-    && echo "/usr/local/bin/squid-analyzer" >> squid-analyzer \
+    && echo "/usr/local/bin/squid-analyzer -d 2> /var/squid/logs/analyzer.log" >> squid-analyzer \
     && echo "echo Done" >> squid-analyzer \
     && chmod +x squid-analyzer
 WORKDIR /usr/local/bin

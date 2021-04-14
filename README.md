@@ -12,4 +12,4 @@ htpasswd -b etc/passwords username password
 
 ## Todo
 TODO: move all ENVs to a single file
-TODO: auth for stats
+TODO: auth for stats and pacs

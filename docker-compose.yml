@@ -23,7 +23,7 @@ services:
       - ./logs:/var/squid/logs
       - ./http:/htdocs/
     depends_on:
-      - squid-distahl
+      - squid
     command: /usr/local/bin/copyhtml.sh
     restart: "no"
 
@@ -31,12 +31,13 @@ services:
     build: ./build/apache
     depends_on:
       - loganalyzer
-      - squid-distahl
+      - squid
     ports:
       - "8080:80"
     volumes:
       - ./http:/usr/local/apache2/htdocs/
       - ./pacs:/usr/local/apache2/htdocs/pacs/
+      - ./etc/passwords:/etc/passwords
     restart: "no"
 
 
