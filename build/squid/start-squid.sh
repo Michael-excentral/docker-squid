@@ -143,4 +143,6 @@ cd $run_dir
 [[ $run_dir != "" ]] && rm -rf $run_dir/*
 rm -f /run/squid.pid #shouldn't be there, but just to be sure
 
+cron
+
 $DAEMON $SQUID_ARGS

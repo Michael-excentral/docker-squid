@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  squid-distahl:
-    build: ./build/squid-distahl/
+  squid:
+    build: ./build/squid/
 #    env_file:
 #      - variables.env
     ports:
