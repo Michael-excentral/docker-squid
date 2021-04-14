@@ -4,6 +4,8 @@ ENV ANALYZER_VERSION=6.6 \
     ANALYZER_USER=1000
 
 WORKDIR /tmp
+RUN adduser --uid ${ANALYZER_USER} apacheuser || :
+
 RUN apk add --no-cache tzdata make perl \
   && cp /usr/share/zoneinfo/Asia/Nicosia /etc/localtime \
   && echo "Asia/Nicosia" >  /etc/timezone \
@@ -29,7 +31,7 @@ WORKDIR /etc/periodic/15min
 RUN echo "#!/bin/sh" > squid-analyzer \
     && echo "echo -n \"Running squid-analyzer...\"" >> squid-analyzer \
     && echo "/usr/local/bin/squid-analyzer" >> squid-analyzer \
-    && echo "Done" >> squid-analyzer \
+    && echo "echo Done" >> squid-analyzer \
     && chmod +x squid-analyzer
 WORKDIR /usr/local/bin
 RUN echo "#!/bin/sh" > copyhtml.sh \
