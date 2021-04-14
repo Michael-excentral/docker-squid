@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3
 
 ENV ANALYZER_VERSION=6.6 \
     ANALYZER_USER=1000
@@ -8,7 +8,7 @@ RUN apk add --no-cache tzdata make perl \
   && cp /usr/share/zoneinfo/Asia/Nicosia /etc/localtime \
   && echo "Asia/Nicosia" >  /etc/timezone \
   && apk del tzdata
-RUN wget https://sourceforge.net/projects/squid-report/files/squid-report/${ANALYZER_VERSION}/squidanalyzer-${ANALYZER_VERSION}.tar.gz/download -O squidanalyzer-${ANALYZER_VERSION}.tar.gz
+RUN wget -q https://sourceforge.net/projects/squid-report/files/squid-report/${ANALYZER_VERSION}/squidanalyzer-${ANALYZER_VERSION}.tar.gz/download -O squidanalyzer-${ANALYZER_VERSION}.tar.gz
 RUN tar -xzf squidanalyzer-${ANALYZER_VERSION}.tar.gz
 WORKDIR /tmp/squidanalyzer-${ANALYZER_VERSION}
 RUN perl Makefile.PL \
@@ -27,7 +27,9 @@ RUN perl Makefile.PL \
 
 WORKDIR /etc/periodic/15min
 RUN echo "#!/bin/sh" > squid-analyzer \
+    && echo "echo -n \"Running squid-analyzer...\"" >> squid-analyzer \
     && echo "/usr/local/bin/squid-analyzer" >> squid-analyzer \
+    && echo "Done" >> squid-analyzer \
     && chmod +x squid-analyzer
 WORKDIR /usr/local/bin
 RUN echo "#!/bin/sh" > copyhtml.sh \

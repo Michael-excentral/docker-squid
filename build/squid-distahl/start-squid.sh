@@ -48,7 +48,7 @@ if [[ -n $PROXY_UID && $(id -u proxy 2>/dev/null) != $PROXY_UID ]]; then
 	echo "##################################################"
 	echo
 fi
-	
+
 if [[ -n $PROXY_GID && $(id -g proxy 2>/dev/null) != $PROXY_UID ]]; then
 	echo "###################################################"
 	echo "Configured group id changed. Setting permissions..."

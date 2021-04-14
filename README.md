@@ -7,5 +7,9 @@ Using port 8080 for the statistics (not protected yet)
 
 Serving pac files in folder "pacs" from host:8080/pacs
 
+## Password protection
+htpasswd -bB etc/passwords username password
+
+## Todo
 TODO: move all ENVs to a single file
 TODO: auth for stats
